@@ -202,9 +202,12 @@ class ExplorationManager:
         return result
                 
     def addPlaceCallback(self, place):
-        pt = self.occMap.getPositionFromPixel(Point2Di(place[0][0], place[0][1]))
-        label = place[1]
-        self.addPlace(label, [pt.x, pt.y])
+        print "blablabla"
+#        pt = self.occMap.getPositionFromPixel(Point2Di(place[0][0], place[0][1]))
+#        self.logger.warning(pt)
+#        self.nav.relocalize(pt)
+        #label = place[1]
+        #self.addPlace(label, [pt.x, pt.y])
         
     def addPlace(self, label, position):
         if self.current_places == None:

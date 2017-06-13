@@ -10,6 +10,8 @@ angular.module('pepper-patrol', ['ngTouch'])
         var size = null;
         var offset = null;
         var touch = null;
+        // step : 0 = list explo, 1 = reloc
+        var step = 0;
 
         $scope.addOnClick = function (event) {
             var img = document.getElementById("map_container");
@@ -18,11 +20,17 @@ angular.module('pepper-patrol', ['ngTouch'])
             touch = [pxlX, pxlY];
             if (pxlX > 0 && pxlX < img.width && pxlY > 0 && pxlY < img.height) {
                 console.log("click: " + event.offsetX + " " + event.offsetY);
-                var label_field = document.getElementById("label_field_id");
-                label_field.value = "";
-                label_field.focus();
+                if (step == 1) {
+                    memory.raiseEvent("Places/Relocalize", [pxlX, pxlY]);
+                    document.getElementById("mode_configure").click();
+                }
             }
         };
+        
+        $scope.OnModeChanged = function() {
+            step = document.querySelector('input[name="mode"]:checked').value
+            console.log("onchanged: " + step.toString());
+        }
 
         $scope.OnClickAddLabel = function() {
             var label = document.getElementById("label_field_id").value;

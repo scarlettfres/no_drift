@@ -34,7 +34,6 @@
     <sentence lang="en_US">Let me show you the places panel</sentence>
     <sentence lang="en_US-x-scrald">Let me show you the places panel</sentence>
    </loadingResponses>
-   <autonomous/>
    <permissions>
     <canRunOnPod/>
    </permissions>
@@ -45,6 +44,6 @@
   <robotRequirement model="JULIETTE_Y20"/>
  </requirements>
  <services>
-  <service execStart="python explorationManager.py" name="explorationManager" autorun="true"/>
+  <service autorun="true" name="explorationManager" execStart="python explorationManager.py"/>
  </services>
 </package>

@@ -1,26 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<ChoregrapheProject xmlns="http://www.aldebaran-robotics.com/schema/choregraphe/project.xsd" xar_version="3">
-    <Box name="root" id="-1" localization="8" tooltip="Root box of Choregraphe&apos;s behavior. Highest level possible." x="0" y="0">
-        <bitmap>media/images/box/root.png</bitmap>
-        <script language="4">
-            <content>
-                <![CDATA[]]>
-</content>
-        </script>
-        <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
-        <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
-        <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
-        <Input name="Places/Exit" type="0" type_size="1" nature="4" stm_value_name="Places/Exit" inner="1" tooltip="Places/Exit desc" id="4" />
-        <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="5" />
-        <Timeline enable="0">
-            <BehaviorLayer name="behavior_layer1">
-                <BehaviorKeyframe name="keyframe1" index="1">
-                    <Diagram>
-                        <Box name="Display map" id="1" localization="8" tooltip="" x="523" y="33">
-                            <bitmap>media/images/box/box-python-script.png</bitmap>
-                            <script language="4">
-                                <content>
-                                    <![CDATA[import time
+<?xml version="1.0" encoding="UTF-8" ?><ChoregrapheProject xmlns="http://www.aldebaran-robotics.com/schema/choregraphe/project.xsd" xar_version="3"><Box name="root" id="-1" localization="8" tooltip="Root box of Choregraphe&apos;s behavior. Highest level possible." x="0" y="0"><bitmap>media/images/box/root.png</bitmap><script language="4"><content><![CDATA[]]></content></script><Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" /><Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" /><Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" /><Input name="Places/Exit" type="0" type_size="1" nature="4" stm_value_name="Places/Exit" inner="1" tooltip="Places/Exit desc" id="4" /><Input name="Places/Relocalize" type="0" type_size="1" nature="4" stm_value_name="Places/Relocalize" inner="1" tooltip="Places/Relocalize desc" id="5" /><Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="6" /><Timeline enable="0"><BehaviorLayer name="behavior_layer1"><BehaviorKeyframe name="keyframe1" index="1"><Diagram><Box name="Display map" id="1" localization="8" tooltip="" x="265" y="404"><bitmap>media/images/box/box-python-script.png</bitmap><script language="4"><content><![CDATA[import time
 
 class MyClass(GeneratedClass):
     def __init__(self):
@@ -75,20 +53,132 @@ class MyClass(GeneratedClass):
 
     def onInput_onStop(self):
         self.onUnload() #it is recommended to reuse the clean-up as the box is stopped
-        self.onStopped() #activate the output of the box]]>
-</content>
-                            </script>
-                            <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
-                            <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
-                            <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
-                            <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" />
-                        </Box>
-                        <Link inputowner="1" indexofinput="2" outputowner="0" indexofoutput="2" />
-                        <Link inputowner="0" indexofinput="5" outputowner="1" indexofoutput="4" />
-                        <Link inputowner="1" indexofinput="3" outputowner="0" indexofoutput="4" />
-                    </Diagram>
-                </BehaviorKeyframe>
-            </BehaviorLayer>
-        </Timeline>
-    </Box>
-</ChoregrapheProject>
+        self.onStopped() #activate the output of the box]]></content></script><Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" /><Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" /><Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" /><Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" /></Box><Box name="Patrol panel" id="3" localization="8" tooltip="" x="581" y="330"><bitmap>media/images/box/box-python-script.png</bitmap><script language="4"><content><![CDATA[import time
+import almath as m
+import qi
+
+try:
+    from almath import OccupancyMapParams
+    from almath import Point2Di
+except:
+    class Point2Di:
+        def __init__(self, x, y):
+            self.x = x
+            self.y = y
+
+    class OccupancyMapParams:
+        def __init__(self, size, metersPerPixel, originOffest):
+            self.size = size
+            self.metersPerPixel = metersPerPixel
+            # Metric coordinates of the (0, 0) pixel.
+            self.originOffset = m.Position2D(0, 0)
+            self.originOffset.x = originOffest.x
+            self.originOffset.y = originOffest.y
+
+        def getPositionFromPixel(self, pixel):
+            return m.Position2D(pixel.x * self.metersPerPixel + self.originOffset.x, -pixel.y * self.metersPerPixel + self.originOffset.y)
+
+        def getPixelFromPosition(self, position):
+            return m.Position2D((position.x - self.originOffset.x) / self.metersPerPixel, (self.originOffset.y - position.y) / self.metersPerPixel)
+
+class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self)
+        self.session = qi.Session()
+        self.session.connect("tcp://127.0.0.1:9559")
+        self.mem = self.session.service("ALMemory")
+        self.nav = self.session.service("ALNavigation")
+        self.tts = self.session.service("ALAnimatedSpeech")
+        self.dialog = self.session.service("ALDialog")
+        self.stopPatrol = False
+        self.infinitePatrol = False
+        try:
+            self.exploManager = self.session.service("ExplorationManager")
+        except:
+            self.tts.say("Please install application Places to run Patrol")
+            self.onInput_onStop()
+            return
+        self.events = {"metricalMap": "Patrol/MetricalMap",
+                       "exploList": "Patrol/AvailableExplo",
+                       "waypoints": "Patrol/Waypoints",
+                       "addwaypoint": "Patrol/AddWayPoint",
+                       "startpatrol": "Patrol/StartPatrol",
+                       "reset": "Patrol/Reset",
+                       "relocalize": "Patrol/Relocalize",
+                       "exit": "Patrol/Exit",
+                       "stoppatrol": "Patrol/StopPatrol",
+                       "patrolStarted": "Patrol/PatrolStarted",
+                       "patrolFinished": "Patrol/PatrolFinished",
+                       "infinitePatrol": "Patrol/OnInfinitePatrolChanged"}
+        self.waypoints = []
+        self.waypointsPx = []
+
+    def declareEvents(self):
+        for k in self.events:
+            self.mem.declareEvent(self.events[k])
+
+    def onLoad(self):
+        self.declareEvents()
+        pass
+
+    def onUnload(self):
+        self.onStopDialog()
+        self.nav.stopLocalization()
+        pass
+
+    def updateRobotPosition(self):
+        robot_pose = m.Pose2D(self.nav.getRobotPositionInMap()[0])
+        position = m.Position2D(robot_pose.x, robot_pose.y)
+        pxl = self.occMap.getPixelFromPosition(position)
+        pxl_front = self.occMap.getPixelFromPosition(m.position2DFromPose2D(robot_pose * m.Pose2D(0.2, 0, 0)))
+        radius = 0.2 / self.occMap.metersPerPixel
+        self.mem.raiseEvent("Patrol/RobotPosition", [[int(pxl.x), int(pxl.y)], int(radius), [int(pxl_front.x), int(pxl_front.y)]])
+
+    def startDialog(self):
+        self.setDialogConcept()
+        self.onStartDialog()
+
+    def setDialogConcept(self):
+        places = self.exploManager.getPlaces()
+        list = []
+        for place in places:
+            list.append(place)
+        list.append("Patrol")
+        self.dialog.setConcept("patrol/waypointlist", "enu", list)
+
+    def onInput_onStart(self):
+        if not(self.exploManager):
+            return
+        occMap = self.exploManager.getOccupancyMapParams()
+        self.occMap = OccupancyMapParams(occMap[0], occMap[1], m.Position2D())
+        self.occMap.originOffset = m.Position2D(occMap[2][0], occMap[2][1])
+        if self.exploManager.isLocalized():
+            self.onLocalized()
+        else:
+            self.tts.say("Please help me localizing by clicking the map where you think I am")
+
+    def onInput_onRelocalize(self, target):
+        self.tts.say("Please take a step back so that I can take a look")
+        time.sleep(3)
+        px = Point2Di(target[0], target[1])
+        metrical_target = self.occMap.getPositionFromPixel(px)
+        self.logger.info("px: " + str(px))
+        self.logger.info("relocalize at: " + str(metrical_target))
+        try:
+            self.nav.relocalizeInMap([metrical_target.x, metrical_target.y, 0.0])
+            self.onLocalized()
+        except Exception as e:
+            self.logger.info(str(e))
+
+    def onLocalized(self):
+        try:
+            self.nav.startLocalization()
+            self.updateRobotPosition()
+            self.tts.say("Click the button to configure Patrol. You can also use vocal targets")
+            self.startDialog()
+        except Exception as e:
+            self.logger.info(str(e))
+
+    def onInput_onStop(self):
+        self.onUnload() #it is recommended to reuse the clean-up as the box is stopped
+        self.onStopped() #activate the output of the box]]></content></script><Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" /><Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" /><Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" /><Input name="onAddWayPoint" type="0" type_size="1" nature="1" inner="0" tooltip="" id="4" /><Input name="onStartPatrol" type="1" type_size="1" nature="1" inner="0" tooltip="" id="5" /><Input name="onReset" type="1" type_size="1" nature="1" inner="0" tooltip="" id="6" /><Input name="onRelocalize" type="0" type_size="1" nature="1" inner="0" tooltip="" id="7" /><Input name="onWordRecognized" type="3" type_size="1" nature="1" inner="0" tooltip="" id="8" /><Input name="onStopPatrol" type="1" type_size="1" nature="1" inner="0" tooltip="" id="9" /><Input name="onInfinitePatrolChanged" type="0" type_size="1" nature="1" inner="0" tooltip="" id="10" /><Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="11" /><Output name="onStartDialog" type="1" type_size="1" nature="2" inner="0" tooltip="" id="12" /><Output name="onStopDialog" type="1" type_size="1" nature="2" inner="0" tooltip="" id="13" /></Box><Link inputowner="1" indexofinput="2" outputowner="0" indexofoutput="2" /><Link inputowner="1" indexofinput="3" outputowner="0" indexofoutput="4" /><Link inputowner="3" indexofinput="2" outputowner="1" indexofoutput="4" /><Link inputowner="0" indexofinput="6" outputowner="3" indexofoutput="11" /><Link inputowner="3" indexofinput="7" outputowner="0" indexofoutput="5" /><Link inputowner="3" indexofinput="3" outputowner="0" indexofoutput="4" /></Diagram></BehaviorKeyframe></BehaviorLayer></Timeline></Box></ChoregrapheProject>

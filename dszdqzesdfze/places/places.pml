@@ -28,7 +28,11 @@
         <File name="explorationManager" src="explorationManager.py" />
     </Resources>
     <Topics />
-    <IgnoredPaths />
+    <IgnoredPaths>
+        <Path src="html/js/main.js~" />
+        <Path src="html/index.html~" />
+        <Path src="README.md" />
+    </IgnoredPaths>
     <Translations auto-fill="en_US">
         <Translation name="translation_en_US" src="translations/translation_en_US.ts" language="en_US" />
     </Translations>
