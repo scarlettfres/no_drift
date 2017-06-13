@@ -61,10 +61,29 @@ angular.module('pepper-patrol', ['ngTouch'])
             var waypoint_canvas = document.getElementById("places");
             waypoint_canvas.width = size;
             waypoint_canvas.height = size;
+            step = 1;
             document.getElementById("label_ui").style.visibility = "visible";
             document.getElementById("places_ui").style.visibility = "visible";
             document.getElementById("map_loading_screen").style.display = "block";
             document.getElementById("loading_map_ui").style.display = "none";
+        };
+
+        $scope.setRobot = function (tab) {
+            console.log("setRobot");
+            var centerX = tab[0][0];
+            var centerY = tab[0][1];
+            var radius = tab[1];
+            var canvas = document.getElementById('map_container');
+            var context = canvas.getContext('2d');
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            context.beginPath();
+            context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+            context.fillStyle="blue";
+            context.fill();
+            context.beginPath();
+            context.arc(tab[2][0], tab[2][1], 0.5 * radius, 0, 2 * Math.PI, false);
+            context.fillStyle="blue";
+            context.fill();
         };
 
         $scope.setPlaces = function (tab) {
@@ -132,6 +151,7 @@ angular.module('pepper-patrol', ['ngTouch'])
             RobotUtils.subscribeToALMemoryEvent("ExplorationManager/MetricalMap", $scope.setMap);
             RobotUtils.subscribeToALMemoryEvent("ExplorationManager/Places", $scope.setPlaces);
             RobotUtils.subscribeToALMemoryEvent("Places/AvailableExplo", $scope.listAvailableExplo);
+            RobotUtils.subscribeToALMemoryEvent("Places/RobotPosition", $scope.setRobot);
         };
 
         var onDisconnected = function () {
