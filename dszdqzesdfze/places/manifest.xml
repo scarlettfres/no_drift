@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<package uuid="exploration-manager" version="0.0.4">
+ <names>
+  <name lang="en_US">Places</name>
+  <name lang="en_US-x-scrald">Places</name>
+ </names>
+ <descriptions>
+  <description lang="en_US">The robot explores its environement and makes a map.</description>
+  <description lang="en_US-x-scrald">The robot explores its environement and makes a map.</description>
+ </descriptions>
+ <supportedLanguages>
+  <language>en_US</language>
+ </supportedLanguages>
+ <descriptionLanguages>
+  <language>en_US</language>
+ </descriptionLanguages>
+ <contents>
+  <behaviorContent path="display_places">
+   <userRequestable/>
+   <nature>interactive</nature>
+   <names>
+    <name lang="en_US">display_places</name>
+    <name lang="en_US-x-scrald">display_places</name>
+   </names>
+   <triggerSentences>
+    <sentence lang="en_US">Show me the places</sentence>
+    <sentence lang="en_US">Places</sentence>
+    <sentence lang="en_US">Show me the nearby places</sentence>
+    <sentence lang="en_US-x-scrald">Show me the places</sentence>
+    <sentence lang="en_US-x-scrald">Places</sentence>
+    <sentence lang="en_US-x-scrald">Show me the nearby places</sentence>
+   </triggerSentences>
+   <loadingResponses>
+    <sentence lang="en_US">Let me show you the places panel</sentence>
+    <sentence lang="en_US-x-scrald">Let me show you the places panel</sentence>
+   </loadingResponses>
+   <autonomous/>
+   <permissions>
+    <canRunOnPod/>
+   </permissions>
+  </behaviorContent>
+ </contents>
+ <requirements>
+  <naoqiRequirement minVersion="2.5.2"/>
+  <robotRequirement model="JULIETTE_Y20"/>
+ </requirements>
+ <services>
+  <service execStart="python explorationManager.py" name="explorationManager" autorun="true"/>
+ </services>
+</package>
