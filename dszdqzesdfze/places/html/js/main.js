@@ -126,6 +126,13 @@ angular.module('pepper-patrol', ['ngTouch'])
             memory.raiseEvent("Places/Exit", [])
         }
 
+        $scope.OnStart = function() {
+            memory.raiseEvent("Places/Start", [])
+        }
+        $scope.OnStop = function() {
+            memory.raiseEvent("Places/Stop", [])
+        }
+
         $scope.OnSave = function() {
             memory.raiseEvent("Places/Save", [])
         }

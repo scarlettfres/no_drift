@@ -7,7 +7,9 @@ import numpy as np
 import almath as m
 import base64
 import sys
-from replace import TimerNoDrift
+import functools
+#from replace import TimerNoDrift
+
 try:
     import cPickle as pickle
 except:
@@ -93,16 +95,23 @@ class ExplorationManager:
         self.explo_extension = ".explo"
         self.places_extension = ".places"
         self.packageUid = "exploration-manager"
+        #self.timerNoDrift = TimerNoDrift(3, self.nav, self.tts)
         self.subscribers = {
             "Places/LoadPlaces": {"callback": self.loadPlaces},
             "Places/Save": {"callback": self.savePlacesCallback},
             "Places/AddPlace": {"callback": self.addPlaceCallback},
-            "Places/Reset": {"callback": self.resetPlacesCallback}
+            "Places/Reset": {"callback": self.resetPlacesCallback},
+            "Places/Start": {"callback": self.startDriftCallback},
+            "Places/Stop": {"callback": self.stopDriftCallback}
         }
+        
         self.events = {"metricalMap": "ExplorationManager/MetricalMap",
                        "places": "ExplorationManager/Places"}
         self.eventHelper = EventHelper(self.memory, self.subscribers)
-
+        self.noDrift = qi.PeriodicTask()
+        self.noDrift.setCallback(self.hello)
+        self.noDrift.setUsPeriod(3000000)
+            
     def isExplorationLoaded(self):
         try:
             self.nav.getExplorationPath()
@@ -132,9 +141,24 @@ class ExplorationManager:
             return self.current_places["places"][label]
         return None
 
+        
+    def hello(self):
+        self.tts.say("hello")
+        
     def resetPlacesCallback(self, useless):
         self.resetPlaces()
+        
+    def startDriftCallback(self):
+        self.logger.warning("sstartDriftCallback")
+        self.noDrift.start(True)
+        return True
+   
+    def stopDriftCallback(self):
+        self.logger.warning("stopDriftCallback")
+        self.noDrift.stop()
+        return 0
 
+        
     def resetPlaces(self):
         self.current_places["places"] = {}
         self.publishLabels()
