@@ -87,7 +87,7 @@ class ExplorationManager:
         self.nav = self.session.service("ALNavigation")
         self.tabletService = self.session.service("ALTabletService")
         self.memory = self.session.service("ALMemory")
-        self.tts = self.session.service("ALAnimatedSpeech")
+        self.tts = self.session.service("ALTextToSpeech")
         self.application_name = "ExplorationManager"
         self.explorer_application_name = "Explorer"
         self.current_places = None
@@ -143,8 +143,17 @@ class ExplorationManager:
 
         
     def hello(self):
-        self.tts.say("hello")
-        
+        self.tts.say("prout")
+        try:
+#            robotPose = m.Pose2D(self.nav.getRobotPositionInMap())
+#            center = m.Pose2D(0.0, 0.0, 0.0)
+            self.nav.navigateToInMap([0.0, 0.0])
+            #TODO: later
+            #if robotPose.distance(center) > 0.2:
+                #self.tts.say(" TOO FAR")
+        except Exception as e:
+            self.logger.error("RobotNotlocalized" + str(e))
+
         
     def resetPlacesCallback(self, useless):
         self.resetPlaces()
@@ -157,6 +166,7 @@ class ExplorationManager:
     def stopDriftCallback(self, useless):
         self.logger.warning("stopDriftCallback")
         self.noDrift.stop()
+        self.nav.stopLocalization()
         return 0
 
         
