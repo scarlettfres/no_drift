@@ -26,6 +26,7 @@
         <File name="__init__" src="__init__.py" />
         <File name="__init__" src="display_places/__init__.py" />
         <File name="explorationManager" src="explorationManager.py" />
+        <File name="replace" src="replace.py" />
     </Resources>
     <Topics />
     <IgnoredPaths>
