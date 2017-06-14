@@ -23,12 +23,12 @@
     <name lang="en_US-x-scrald">display_places</name>
    </names>
    <triggerSentences>
-    <sentence lang="en_US">Show me the places</sentence>
-    <sentence lang="en_US">Places</sentence>
-    <sentence lang="en_US">Show me the nearby places</sentence>
-    <sentence lang="en_US-x-scrald">Show me the places</sentence>
-    <sentence lang="en_US-x-scrald">Places</sentence>
-    <sentence lang="en_US-x-scrald">Show me the nearby places</sentence>
+    <sentence lang="en_US">drift</sentence>
+    <sentence lang="en_US">don't drift</sentence>
+    <sentence lang="en_US">no drift</sentence>
+    <sentence lang="en_US-x-scrald">drift</sentence>
+    <sentence lang="en_US-x-scrald">don't drift</sentence>
+    <sentence lang="en_US-x-scrald">no drift</sentence>
    </triggerSentences>
    <loadingResponses>
     <sentence lang="en_US">Let me show you the places panel</sentence>
