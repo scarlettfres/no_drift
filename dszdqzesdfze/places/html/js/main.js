@@ -20,10 +20,8 @@ angular.module('pepper-patrol', ['ngTouch'])
             touch = [pxlX, pxlY];
             if (pxlX > 0 && pxlX < img.width && pxlY > 0 && pxlY < img.height) {
                 console.log("click: " + event.offsetX + " " + event.offsetY);
-                if (step == 1) {
                     memory.raiseEvent("Places/Relocalize", [pxlX, pxlY]);
                     document.getElementById("mode_configure").click();
-                }
             }
         };
         
@@ -64,7 +62,7 @@ angular.module('pepper-patrol', ['ngTouch'])
             step = 1;
             document.getElementById("label_ui").style.visibility = "visible";
             document.getElementById("places_ui").style.visibility = "visible";
-            document.getElementById("map_loading_screen").style.display = "block";
+            document.getElementById("map_loading_screen").style.display = "none";
             document.getElementById("loading_map_ui").style.display = "none";
         };
 
@@ -120,7 +118,7 @@ angular.module('pepper-patrol', ['ngTouch'])
               document.forms.form.exploration_list.options.selectedIndex].value;
             console.log("load explo " + exploPath);
             document.getElementById("map_loading_screen").style.display = "none";
-            document.getElementById("loading_map_ui").style.display = "block";
+            document.getElementById("loading_map_ui").style.display = "none";
             memory.raiseEvent("Places/LoadPlaces", exploPath);
         }
 
