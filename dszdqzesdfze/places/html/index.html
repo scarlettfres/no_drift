@@ -49,14 +49,12 @@
         <input type="radio" name="mode" value="1" id="mode_relocalize" checked> Relocalize the robot<br>
       </form>
     </div>
-<!--    <div id="places_ui" style="visibility:hidden">
-      <button ng-click="OnResetClick($event)">Reset</button>
-      <button ng-click="OnSave($event)">Save</button>
-    </div>-->
+    <div id="places_ui" style="visibility:hidden">
+      <button ng-click="OnStop($event)">Stop</button>
+      <button ng-click="OnStart($event)">Start</button>
+    </div>
     <div id="general" style="visibility:hidden">
-      <button ng-click="OnExit($event)">Start</button>
-      <button ng-click="OnStart($event)">Stop</button>
-      <button ng-click="OnStop($event)">Exit</button>
+      <button ng-click="OnExit($event)">Exit</button>
     </div>
   </div>
 

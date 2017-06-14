@@ -145,15 +145,16 @@ class ExplorationManager:
     def hello(self):
         self.tts.say("hello")
         
+        
     def resetPlacesCallback(self, useless):
         self.resetPlaces()
         
-    def startDriftCallback(self):
+    def startDriftCallback(self, useless):
         self.logger.warning("sstartDriftCallback")
         self.noDrift.start(True)
         return True
    
-    def stopDriftCallback(self):
+    def stopDriftCallback(self, useless):
         self.logger.warning("stopDriftCallback")
         self.noDrift.stop()
         return 0
