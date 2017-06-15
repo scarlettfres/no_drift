@@ -8,6 +8,7 @@ import almath as m
 import base64
 import sys
 import functools
+import math
 #from replace import TimerNoDrift
 
 try:
@@ -152,7 +153,9 @@ class ExplorationManager:
                 self.nav.navigateToInMap([0.0, 0.0])
             if robotPose.distance(center) < 0.3:
                 poseDiff = robotPose.diff(center)
-                self.motion.moveTo(0, 0, poseDiff.theta)
+                if math.fabs(poseDiff.theta) > 0.2:
+                    self.motion.moveTo(0, 0, poseDiff.theta)
+                    self.logger.info("moveTo theta : " + str(poseDiff.theta))
                 
         except Exception as e:
             self.logger.error("RobotNotlocalized" + str(e))
@@ -162,7 +165,7 @@ class ExplorationManager:
         self.resetPlaces()
         
     def startDriftCallback(self, useless):
-        self.logger.warning("sstartDriftCallback")
+        self.logger.warning("startDriftCallback")
         self.noDrift.start(True)
         return True
    
@@ -178,6 +181,7 @@ class ExplorationManager:
         self.publishLabels()
 
     def loadExploration(self, name):
+        self.nav.stopLocalization()
         explo_path = qi.path.findData(
             self.explorer_application_name, name + self.explo_extension, False)
         if len(explo_path) > 0:

@@ -31,8 +31,8 @@
     <sentence lang="en_US-x-scrald">no drift</sentence>
    </triggerSentences>
    <loadingResponses>
-    <sentence lang="en_US">Let me show you the places panel</sentence>
-    <sentence lang="en_US-x-scrald">Let me show you the places panel</sentence>
+    <sentence lang="en_US">Let me show you the explorations</sentence>
+    <sentence lang="en_US-x-scrald">Let me show you the explorations</sentence>
    </loadingResponses>
    <permissions>
     <canRunOnPod/>
