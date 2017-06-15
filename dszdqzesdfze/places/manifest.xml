@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<package uuid="exploration-manager" version="0.0.4">
+<package version="0.0.4" uuid="exploration-manager">
  <names>
-  <name lang="en_US">Places</name>
+  <name lang="en_US">noDrift</name>
   <name lang="en_US-x-scrald">Places</name>
  </names>
  <descriptions>

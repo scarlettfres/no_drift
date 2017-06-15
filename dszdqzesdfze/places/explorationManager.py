@@ -85,6 +85,7 @@ class ExplorationManager:
     def __init__(self, session):
         self.session = session
         self.nav = self.session.service("ALNavigation")
+        self.motion = self.session.service("ALMotion")
         self.tabletService = self.session.service("ALTabletService")
         self.memory = self.session.service("ALMemory")
         self.tts = self.session.service("ALTextToSpeech")
@@ -145,12 +146,14 @@ class ExplorationManager:
     def hello(self):
         self.tts.say("prout")
         try:
-#            robotPose = m.Pose2D(self.nav.getRobotPositionInMap())
-#            center = m.Pose2D(0.0, 0.0, 0.0)
-            self.nav.navigateToInMap([0.0, 0.0])
-            #TODO: later
-            #if robotPose.distance(center) > 0.2:
-                #self.tts.say(" TOO FAR")
+            robotPose = m.Pose2D(self.nav.getRobotPositionInMap()[0])
+            center = m.Pose2D(0.0, 0.0, 0.0)
+            if robotPose.distance(center) > 0.3:
+                self.nav.navigateToInMap([0.0, 0.0])
+            if robotPose.distance(center) < 0.3:
+                poseDiff = robotPose.diff(center)
+                self.motion.moveTo(0, 0, poseDiff.theta)
+                
         except Exception as e:
             self.logger.error("RobotNotlocalized" + str(e))
 

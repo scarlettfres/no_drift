@@ -12,6 +12,14 @@
  <contents>
   <behaviorContent path="all">
    <nature>interactive</nature>
+    <triggerSentences>
+    <sentence lang="en_US">drift Setup</sentence>
+    <sentence lang="en_US-x-scrald">drift Setup</sentence>
+   </triggerSentences>
+   <loadingResponses>
+    <sentence lang="en_US">Let's make a map</sentence>
+    <sentence lang="en_US-x-scrald">Let's make a map</sentence>
+   </loadingResponses>
    <permissions/>
   </behaviorContent>
   <behaviorContent path="explore_display">
