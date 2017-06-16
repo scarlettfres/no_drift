@@ -142,7 +142,7 @@ angular.module('pepper-patrol', ['ngTouch'])
                 memory = service;
             }, function (error) {
             });
-            session.service("ExplorationManager").then(function (service) {
+            session.service("NoDriftManager").then(function (service) {
                 exploManager = service;
                 exploManager.getAvailableExplorations().then(function (list) {
                     console.log(list);

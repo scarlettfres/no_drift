@@ -9,7 +9,6 @@ import base64
 import sys
 import functools
 import math
-#from replace import TimerNoDrift
 
 try:
     import cPickle as pickle
@@ -78,10 +77,10 @@ class EventHelper:
             self.subscribeToggle = False
 
 
-class ExplorationManager:
+class NoDriftManager:
 
     def __new__(cls, session):
-        return super(ExplorationManager, cls).__new__(cls)
+        return super(NoDriftManager, cls).__new__(cls)
 
     def __init__(self, session):
         self.session = session
@@ -90,10 +89,10 @@ class ExplorationManager:
         self.tabletService = self.session.service("ALTabletService")
         self.memory = self.session.service("ALMemory")
         self.tts = self.session.service("ALTextToSpeech")
-        self.application_name = "ExplorationManager"
+        self.application_name = "NoDriftManager"
         self.explorer_application_name = "Explorer"
         self.current_places = None
-        self.logger = qi.Logger("ExplorationManager")
+        self.logger = qi.Logger("NoDriftManager")
         self.explo_extension = ".explo"
         self.places_extension = ".places"
         self.packageUid = "exploration-manager"
@@ -353,6 +352,6 @@ if __name__ == "__main__":
         future = session.waitForService(required_service)
         if future is not None:
             future.wait()
-    my_service = ExplorationManager(session)
-    register_id = session.registerService("ExplorationManager", my_service)
+    my_service = NoDriftManager(session)
+    register_id = session.registerService("NoDriftManager", my_service)
     app.run()
