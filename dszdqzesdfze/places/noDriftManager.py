@@ -99,7 +99,6 @@ class NoDriftManager:
         #self.timerNoDrift = TimerNoDrift(3, self.nav, self.tts)
         self.subscribers = {
             "Places/LoadPlaces": {"callback": self.loadPlaces},
-            "Places/AddPlace": {"callback": self.addPlaceCallback},
             "Places/Reset": {"callback": self.resetPlacesCallback},
             "Places/Start": {"callback": self.startDriftCallback},
             "Places/Stop": {"callback": self.stopDriftCallback}
@@ -240,14 +239,6 @@ class NoDriftManager:
             basename = os.path.basename(path)
             result.append(basename[:len(basename) - 6])
         return result
-
-    def addPlaceCallback(self, place):
-        print "blablabla"
-#        pt = self.occMap.getPositionFromPixel(Point2Di(place[0][0], place[0][1]))
-#        self.logger.warning(pt)
-#        self.nav.relocalize(pt)
-        #label = place[1]
-        #self.addPlace(label, [pt.x, pt.y])
 
     def addPlace(self, label, position):
         if self.current_places == None:

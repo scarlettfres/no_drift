@@ -30,12 +30,6 @@ angular.module('pepper-patrol', ['ngTouch'])
             console.log("onchanged: " + step.toString());
         }
 
-        $scope.OnClickAddLabel = function() {
-            var label = document.getElementById("label_field_id").value;
-            console.log("add label " + label);
-            memory.raiseEvent("Places/AddPlace", [touch, label]);
-        }
-
         $scope.OnResetClick = function(event) {
             memory.raiseEvent("Places/Reset", [])
         }
