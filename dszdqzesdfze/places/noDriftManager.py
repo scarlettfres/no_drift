@@ -99,7 +99,6 @@ class NoDriftManager:
         #self.timerNoDrift = TimerNoDrift(3, self.nav, self.tts)
         self.subscribers = {
             "Places/LoadPlaces": {"callback": self.loadPlaces},
-            "Places/Reset": {"callback": self.resetPlacesCallback},
             "Places/Start": {"callback": self.startDriftCallback},
             "Places/Stop": {"callback": self.stopDriftCallback}
         }
@@ -158,9 +157,6 @@ class NoDriftManager:
             self.logger.error("RobotNotlocalized" + str(e))
 
         
-    def resetPlacesCallback(self, useless):
-        self.resetPlaces()
-        
     def startDriftCallback(self, useless):
         self.logger.warning("startDriftCallback")
         self.noDrift.start(True)
@@ -171,11 +167,6 @@ class NoDriftManager:
         self.noDrift.stop()
         self.nav.stopLocalization()
         return 0
-
-        
-    def resetPlaces(self):
-        self.current_places["places"] = {}
-        self.publishLabels()
 
     def loadExploration(self, name):
         self.nav.stopLocalization()
@@ -240,14 +231,6 @@ class NoDriftManager:
             result.append(basename[:len(basename) - 6])
         return result
 
-    def addPlace(self, label, position):
-        if self.current_places == None:
-            self.logger.warning("No places loaded")
-            return None
-        self.logger.info("adding " + label)
-        self.current_places["places"][label] = position
-        self.publishLabels()
-
     def showWebPage(self):
         appName = self.packageUid
         if self.tabletService.loadApplication(appName):
@@ -310,7 +293,6 @@ class NoDriftManager:
 
     def getOccupancyMapParams(self):
         return [self.occMap.size, self.occMap.metersPerPixel, self.occMap.originOffset.toVector()]
-
 
 if __name__ == "__main__":
     app = qi.Application(sys.argv)

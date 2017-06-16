@@ -103,7 +103,6 @@ class MyClass(GeneratedClass):
                        "waypoints": "Places/Waypoints",
                        "addwaypoint": "Places/AddWayPoint",
                        "startPlaces": "Places/StartPlaces",
-                       "reset": "Places/Reset",
                        "relocalize": "Places/Relocalize",
                        "exit": "Places/Exit",
                        "stopPlaces": "Places/StopPlaces",

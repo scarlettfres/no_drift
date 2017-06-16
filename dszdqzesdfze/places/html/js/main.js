@@ -30,10 +30,6 @@ angular.module('pepper-patrol', ['ngTouch'])
             console.log("onchanged: " + step.toString());
         }
 
-        $scope.OnResetClick = function(event) {
-            memory.raiseEvent("Places/Reset", [])
-        }
-
         $scope.setMap = function (tab) {
             console.log("setMap");
             document.getElementById("map_loading_screen").display = "none";
@@ -76,25 +72,6 @@ angular.module('pepper-patrol', ['ngTouch'])
             context.arc(tab[2][0], tab[2][1], 0.5 * radius, 0, 2 * Math.PI, false);
             context.fillStyle="blue";
             context.fill();
-        };
-
-        $scope.setPlaces = function (tab) {
-            var canvas = document.getElementById('places');
-            var context = canvas.getContext('2d');
-            context.clearRect(0, 0, canvas.width, canvas.height);
-            for (i = 0; i < tab.length; ++i) {
-                var centerX = tab[i][0][0];
-                var centerY = tab[i][0][1];
-                var label = tab[i][1];
-                var radius = 5;
-                context.beginPath();
-                context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
-                context.fillStyle="#00ff00";
-                context.fill();
-                context.font = "30px Arial";
-                context.fillStyle = "#00ff00";
-                context.fillText(label.toString(), centerX + 10, centerY);
-            }
         };
 
         $scope.listAvailableExplo = function(tab) {
