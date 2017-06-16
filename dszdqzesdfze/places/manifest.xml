@@ -44,6 +44,6 @@
   <robotRequirement model="JULIETTE_Y20"/>
  </requirements>
  <services>
-  <service name="explorationManager" execStart="python explorationManager.py" autorun="true"/>
+  <service name="noDriftManager" execStart="python noDriftManager.py" autorun="true"/>
  </services>
 </package>
