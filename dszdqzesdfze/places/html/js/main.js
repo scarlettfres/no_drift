@@ -133,10 +133,6 @@ angular.module('pepper-patrol', ['ngTouch'])
             memory.raiseEvent("Places/Stop", [])
         }
 
-        $scope.OnSave = function() {
-            memory.raiseEvent("Places/Save", [])
-        }
-
         var onConnected = function (session) {
             session.service("ALMemory").then(function (service) {
                 memory = service;

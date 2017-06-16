@@ -99,7 +99,6 @@ class NoDriftManager:
         #self.timerNoDrift = TimerNoDrift(3, self.nav, self.tts)
         self.subscribers = {
             "Places/LoadPlaces": {"callback": self.loadPlaces},
-            "Places/Save": {"callback": self.savePlacesCallback},
             "Places/AddPlace": {"callback": self.addPlaceCallback},
             "Places/Reset": {"callback": self.resetPlacesCallback},
             "Places/Start": {"callback": self.startDriftCallback},
@@ -224,22 +223,6 @@ class NoDriftManager:
             return False
         self.showPlaces()
         return True
-
-    def savePlacesCallback(self, useless):
-        self.savePlaces()
-
-    def savePlaces(self):
-        if self.current_places == None:
-            self.logger.warning("No places loaded")
-            return None
-        path = qi.path.userWritableDataPath(self.application_name, self.current_places[
-                                            "name"] + self.places_extension)
-        out_file = open(path, "wb")
-        self.logger.info("places to save: " + str(self.current_places))
-        pickle.dump(self.current_places, out_file)
-        out_file.close()
-        self.logger.info("places saved to : " + path)
-        return path
 
     def getAvailableExplorations(self):
         data = qi.path.listData(
