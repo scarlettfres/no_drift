@@ -130,15 +130,6 @@ class NoDriftManager:
             self.logger.warning("No places loaded")
             return None
         return self.current_places["places"]
-
-    def getPlaceLocation(self, label):
-        if self.current_places == None:
-            self.logger.warning("No places loaded")
-            return None
-        if label in self.current_places["places"]:
-            return self.current_places["places"][label]
-        return None
-
         
     def hello(self):
         self.tts.say("prout")
@@ -243,21 +234,8 @@ class NoDriftManager:
                 "Got tablet service, but failed to set application: %s" % appName)
             return False
 
-    def publishLabels(self):
-        if self.current_places == None:
-            self.logger.warning("No places loaded")
-            return None
-        place_list = []
-        for place in self.current_places["places"]:
-            current_place = self.current_places["places"][place]
-            pos = self.occMap.getPixelFromPosition(
-                m.Position2D(current_place[0], current_place[1]))
-            place_list.append([[pos.x, pos.y], place])
-        self.memory.raiseEvent(self.events["places"], place_list)
-
     def showPlaces(self):
         self.publishMap()
-        self.publishLabels()
 
     def publishMap(self):
         if self.current_places == None:
