@@ -10,9 +10,11 @@
  </descriptions>
  <supportedLanguages>
   <language>en_US</language>
+  <language>ja_JP</language>
  </supportedLanguages>
  <descriptionLanguages>
   <language>en_US</language>
+  <language>ja_JP</language>
  </descriptionLanguages>
  <contents>
   <behaviorContent path="display_places">
@@ -44,6 +46,6 @@
   <robotRequirement model="JULIETTE_Y20"/>
  </requirements>
  <services>
-  <service execStart="python noDriftManager.py" autorun="true" name="noDriftManager"/>
+  <service autorun="true" name="noDriftManager" execStart="python noDriftManager.py"/>
  </services>
 </package>

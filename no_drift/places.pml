@@ -26,14 +26,14 @@
         <File name="__init__" src="__init__.py" />
         <File name="__init__" src="display_places/__init__.py" />
         <File name="noDriftManager" src="noDriftManager.py" />
+        <File name="noDriftManager" src="noDriftManager.py~" />
     </Resources>
     <Topics />
     <IgnoredPaths>
-        <Path src="html/js/main.js~" />
         <Path src="README.md" />
-        <Path src="places.pml~" />
     </IgnoredPaths>
     <Translations auto-fill="en_US">
         <Translation name="translation_en_US" src="translations/translation_en_US.ts" language="en_US" />
+        <Translation name="translation_ja_JP" src="translations/translation_ja_JP.ts" language="ja_JP" />
     </Translations>
 </Package>
