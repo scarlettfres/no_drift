@@ -107,7 +107,7 @@ class NoDriftManager:
                        "places": "ExplorationManager/Places"}
         self.eventHelper = EventHelper(self.memory, self.subscribers)
         self.noDrift = qi.PeriodicTask()
-        self.noDrift.setCallback(self.hello)
+        self.noDrift.setCallback(self.replace)
         self.noDrift.setUsPeriod(3000000)
             
     def isExplorationLoaded(self):
@@ -131,7 +131,7 @@ class NoDriftManager:
             return None
         return self.current_places["places"]
         
-    def hello(self):
+    def replace(self):
         try:
             robotPose = m.Pose2D(self.nav.getRobotPositionInMap()[0])
             center = m.Pose2D(0.0, 0.0, 0.0)
