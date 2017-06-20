@@ -9,7 +9,7 @@ import base64
 import sys
 import functools
 import math
-
+import almath
 try:
     import cPickle as pickle
 except:
@@ -132,17 +132,18 @@ class NoDriftManager:
         return self.current_places["places"]
         
     def hello(self):
-        self.tts.say("prout")
         try:
             robotPose = m.Pose2D(self.nav.getRobotPositionInMap()[0])
             center = m.Pose2D(0.0, 0.0, 0.0)
             if robotPose.distance(center) > 0.3:
+        	self.tts.say("up")
                 self.nav.navigateToInMap([0.0, 0.0])
             if robotPose.distance(center) < 0.3:
                 poseDiff = robotPose.diff(center)
                 if math.fabs(poseDiff.theta) > 0.2:
-                    self.motion.moveTo(0, 0, poseDiff.theta)
-                    self.logger.info("moveTo theta : " + str(poseDiff.theta))
+		    self.tts.say("up")
+                    self.motion.moveTo(0, 0, almath.modulo2PI(poseDiff.theta))
+                    self.logger.info("moveTo theta : " + str(poseDiff.theta) )
                 
         except Exception as e:
             self.logger.error("RobotNotlocalized" + str(e))
